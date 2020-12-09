@@ -75,7 +75,13 @@
 
     <attr path="/api/package[@name='com.google.android.gms.ads.mediation']/interface[@name='MediationBannerListener']/method[@name='zza']" name="obfuscated">false</attr>
     <attr path="/api/package[@name='com.google.android.gms.ads.mediation']/interface[@name='MediationNativeListener']/method[@name='zza']" name="obfuscated">false</attr>
-    <!--
+
+    <!-- Listener overloads cause duplicate EventArgs classes to get generated. 
+         Should be fixed in 16.9: https://github.com/xamarin/java.interop/pull/726 -->
+    <remove-node path="/api/package[@name='com.google.android.gms.ads.mediation']/interface[@name='MediationBannerListener']/method[@name='onAdFailedToLoad' and count(parameter)=2 and parameter[1][@type='com.google.android.gms.ads.mediation.MediationBannerAdapter'] and parameter[2][@type='com.google.android.gms.ads.AdError']]" />
+    <remove-node path="/api/package[@name='com.google.android.gms.ads.mediation']/interface[@name='MediationInterstitialListener']/method[@name='onAdFailedToLoad' and count(parameter)=2 and parameter[1][@type='com.google.android.gms.ads.mediation.MediationInterstitialAdapter'] and parameter[2][@type='com.google.android.gms.ads.AdError']]" />
+    <remove-node path="/api/package[@name='com.google.android.gms.ads.mediation.customevent']/interface[@name='CustomEventListener']/method[@name='onAdFailedToLoad' and count(parameter)=1 and parameter[1][@type='com.google.android.gms.ads.AdError']]" />
+  <!--
     17.1.0 zzc
     17.2.0 zzb
     -->
